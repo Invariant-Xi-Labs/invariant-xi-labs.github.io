@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lab Log &middot; I-XI Labs</title>
+<meta name="description" content="I-XI Labs — independent security research and formal assurance.">
+<meta property="og:title" content="I-XI Labs">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 1000 1000&apos;%3E%3Cpath fill=&apos;%2316181C&apos; d=&apos;M220 150h180v700h-180z M220 259h560v155h-560z M220 586h560v155h-560z&apos;/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+
+:root{
+  color-scheme:light;
+  --paper:#FAFAF9; --paper-2:#F2F1EE;
+  --ink:#16181C; --ink-2:#4A4F57; --ink-3:#767B83;
+  --rule:#E0DFDB; --rule-2:#C9C7C1;
+  --accent:#1C3F6E; --accent-soft:#E8EDF4;
+  --enforced:#2D6A4F; --declared:#8A5D14; --open:#6B7079;
+  --measure:68ch;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark;
+  --paper:#0F1115; --paper-2:#171A20;
+  --ink:#E8E9EB; --ink-2:#A4AAB3; --ink-3:#787E87;
+  --rule:#262A31; --rule-2:#393F48;
+  --accent:#8FB3E0; --accent-soft:#16202E;
+  --enforced:#6BBF95; --declared:#D2A552; --open:#8B919A;
+}}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0F1115; --paper-2:#171A20;
+  --ink:#E8E9EB; --ink-2:#A4AAB3; --ink-3:#787E87;
+  --rule:#262A31; --rule-2:#393F48;
+  --accent:#8FB3E0; --accent-soft:#16202E;
+  --enforced:#6BBF95; --declared:#D2A552; --open:#8B919A;
+}
+*{box-sizing:border-box}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Serif",Charter,Georgia,serif;
+  font-size:1.125rem; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  padding-inline:20px; padding-block:0;
+}
+.sheet{max-width:calc(var(--measure) + 13rem);margin-inline:auto}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+
+/* ---------------- nav ---------------- */
+.topbar{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:20;
+  background:var(--paper); border-bottom:1px solid var(--rule);
+  margin-inline:-20px; padding-inline:20px;
+}
+.topbar-in{
+  max-width:calc(var(--measure) + 13rem); margin-inline:auto;
+  display:flex; align-items:center; gap:1.5rem;
+  min-height:3.25rem; overflow-x:auto; scrollbar-width:none;
+}
+.topbar-in::-webkit-scrollbar{display:none}
+.navgroup{display:flex;align-items:center;gap:1.35rem}
+.navgroup.secondary{margin-left:auto;padding-left:1.35rem;border-left:1px solid var(--rule);gap:1rem}
+.navlink{
+  font-family:"IBM Plex Mono",monospace; font-size:.76rem;
+  letter-spacing:.11em; text-transform:uppercase;
+  color:var(--ink-2); text-decoration:none; white-space:nowrap;
+  padding-block:.3rem; border-bottom:2px solid transparent;
+}
+.navlink:hover{color:var(--ink)}
+.navlink[aria-current="page"]{color:var(--ink);border-bottom-color:var(--accent);font-weight:500}
+.navgroup.secondary .navlink{font-size:.7rem;color:var(--ink-3);letter-spacing:.09em}
+.navgroup.secondary .navlink:hover{color:var(--accent)}
+.navlink:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* ---------------- masthead ---------------- */
+.masthead{padding-block:3.5rem 0}
+.wordmark{
+  font-family:"IBM Plex Mono",monospace; font-weight:600;
+  font-size:clamp(2.1rem,6vw,3.1rem); letter-spacing:.14em;
+  line-height:1.05; margin:0; color:var(--ink);
+}
+.wordmark .hyphen{color:var(--accent)}
+.subtitle{
+  font-family:"IBM Plex Mono",monospace; font-size:.8rem;
+  letter-spacing:.16em; text-transform:uppercase;
+  color:var(--ink-3); margin:.85rem 0 0;
+}
+.pagetitle{
+  font-family:"IBM Plex Mono",monospace; font-size:.74rem;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+  margin:0 0 .5rem;
+}
+.statusblock{
+  margin-top:2.5rem; border-top:2px solid var(--ink);
+  border-bottom:1px solid var(--rule);
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+}
+.statusblock div{padding:.9rem 1.1rem .95rem 0;border-right:1px solid var(--rule)}
+.statusblock div:last-child{border-right:0}
+.statusblock dt{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem;
+  letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-3); margin:0 0 .3rem;
+}
+.statusblock dd{font-family:"IBM Plex Mono",monospace;font-size:.82rem;margin:0;color:var(--ink)}
+
+/* ---------------- sections ---------------- */
+section{padding-block:3.2rem;border-bottom:1px solid var(--rule)}
+section:last-of-type{border-bottom:0}
+.secnum{
+  font-family:"IBM Plex Mono",monospace; font-size:.72rem;
+  letter-spacing:.16em; color:var(--accent); display:block; margin-bottom:.55rem;
+}
+h2{font-size:1.42rem;font-weight:600;margin:0 0 1.3rem;text-wrap:balance;line-height:1.25}
+h3{font-size:1.03rem;font-weight:600;margin:0 0 .35rem;line-height:1.35}
+p{margin:0 0 1.15rem;max-width:var(--measure)}
+p:last-child{margin-bottom:0}
+.lede{font-size:1.28rem;line-height:1.55}
+.lede em{font-style:italic;color:var(--accent)}
+a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:.18em}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* ---------------- entries (programs, disclosures, notes, tools) ------------- */
+.entry{
+  padding-block:1.6rem; border-top:1px solid var(--rule);
+  display:grid; grid-template-columns:11rem 1fr; gap:0 2rem; align-items:start;
+}
+.entry:first-of-type{border-top:1px solid var(--rule-2)}
+/* Close the group with a rule, the way a table closes. Without it a section
+   trails off into its own bottom padding and reads as dead space. */
+.entry:last-of-type{border-bottom:1px solid var(--rule-2)}
+.desig{
+  font-family:"IBM Plex Mono",monospace; font-size:.74rem;
+  letter-spacing:.1em; color:var(--ink-3); padding-top:.28rem; line-height:1.5;
+}
+.desig .st{display:block;margin-top:.45rem}
+.entry p{font-size:1rem;color:var(--ink-2);margin-bottom:.7rem}
+.stack{font-family:"IBM Plex Mono",monospace;font-size:.74rem;color:var(--ink-3);margin:0}
+.proglink{font-family:"IBM Plex Mono",monospace;font-size:.76rem;display:inline-block;margin-top:.55rem}
+
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:.64rem;
+  letter-spacing:.12em; text-transform:uppercase;
+  padding:.15rem .45rem; border:1px solid currentColor;
+  border-radius:2px; white-space:nowrap; font-weight:500;
+}
+.c-enforced{color:var(--enforced)}
+.c-declared{color:var(--declared)}
+.c-open{color:var(--open)}
+
+/* disclosure timeline */
+.timeline{
+  margin:.9rem 0 0; padding:0; list-style:none;
+  border-left:2px solid var(--rule-2); padding-left:1rem;
+}
+.timeline li{
+  font-family:"IBM Plex Mono",monospace; font-size:.76rem;
+  color:var(--ink-2); padding-block:.22rem;
+  display:grid; grid-template-columns:7.5rem 1fr; gap:0 .75rem;
+}
+.timeline li span:first-child{color:var(--ink-3)}
+
+/* ---------------- state model list ---------------- */
+.states{margin:0;padding:0;list-style:none;border-top:1px solid var(--rule-2)}
+.states li{
+  display:grid; grid-template-columns:8.5rem 1fr; gap:0 2rem;
+  padding-block:1.1rem; border-bottom:1px solid var(--rule); align-items:start;
+}
+.states .def{font-size:1rem;color:var(--ink-2);max-width:var(--measure)}
+.states .def b{color:var(--ink);font-weight:600}
+
+/* ---------------- empty + editor states ---------------- */
+.empty{
+  border:1px solid var(--rule-2); background:var(--paper-2);
+  padding:1.6rem 1.4rem; text-align:left;
+}
+.empty .tag{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem;
+  letter-spacing:.13em; text-transform:uppercase;
+  color:var(--ink-3); display:block; margin-bottom:.5rem;
+}
+.empty p{font-size:.98rem;color:var(--ink-2);margin:0;max-width:var(--measure)}
+.ednote{border:1px dashed var(--declared);background:var(--paper-2);padding:1.15rem 1.25rem;margin-top:1.2rem}
+.ednote .tag{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem;
+  letter-spacing:.13em; text-transform:uppercase; color:var(--declared);
+  display:block; margin-bottom:.5rem; font-weight:600;
+}
+.ednote p{font-size:.95rem;color:var(--ink-2);margin-bottom:0;max-width:none}
+.ednote code{font-size:.85em;background:var(--accent-soft);padding:.08em .35em;border-radius:2px}
+
+/* ---------------- contact + colophon ---------------- */
+.contact{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.5rem 2rem}
+.contact dt{
+  font-family:"IBM Plex Mono",monospace; font-size:.66rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--ink-3); margin-bottom:.35rem;
+}
+.contact dd{margin:0;font-size:.95rem;font-family:"IBM Plex Mono",monospace;word-break:break-word}
+.colophon{
+  padding-block:2.6rem 4rem; border-top:2px solid var(--ink); margin-top:1rem;
+  font-family:"IBM Plex Mono",monospace; font-size:.72rem;
+  color:var(--ink-3); line-height:1.85;
+}
+.colophon .mark{display:inline-block;vertical-align:-.18em;width:1.55rem;margin-right:.45rem;color:var(--ink-2)}
+
+@media (max-width:640px){
+  .entry,.states li,.timeline li{grid-template-columns:1fr;gap:.55rem 0}
+  .desig{padding-top:0}
+  .desig .st{display:inline-block;margin-top:0;margin-left:.6rem}
+  .statusblock div{border-right:0;border-bottom:1px solid var(--rule);padding-right:0}
+  .statusblock div:last-child{border-bottom:0}
+  .masthead{padding-block:2.4rem 0}
+  .navgroup.secondary{border-left:0;padding-left:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav class="topbar" aria-label="Primary"><div class="topbar-in"><div class="navgroup"><a class="navlink" href="index.html">Overview</a><a class="navlink" href="research.html">Research</a><a class="navlink" href="notes.html">Notes</a><a class="navlink" href="tools.html">Tools</a><a class="navlink" href="log.html" aria-current="page">Lab Log</a></div><div class="navgroup secondary"><a class="navlink" href="https://github.com/Invariant-Xi-Labs">GitHub &#8599;</a></div></div></nav>
+<div class="sheet">
+<header class="masthead"><p class="pagetitle">Lab Log</p><h1 class="wordmark">I<span class="hyphen">&#8211;</span>XI&nbsp;LABS</h1></header>
+
+<section>
+  <span class="secnum">&sect; 1 &nbsp; LAB LOG</span>
+  <h2>Build log</h2>
+  <p>The physical and operational side of the lab: rack and network builds, hardware, topology
+  changes, and the occasional record of something going wrong in an instructive way. Less
+  formal than Notes, and it does not carry assurance markers &mdash; nothing here is a claim.</p>
+
+  <div class="empty"><span class="tag">No entries</span><p>No log entries yet. Photographs of the rack build, the network topology, and the blue/red node separation belong here.</p></div>
+</section>
+
+<footer class="colophon">
+  <svg class="mark" viewBox="0 0 1574 860" fill="currentColor" role="img" aria-label="AERGUIIS mark"><path d="M0 0H180V700H0Z M0 109H560V264H0Z M0 436H560V591H0Z M750 18H1414V682H750Z M876 144V556H1288V144H876Z" transform="translate(80,80)"/></svg>
+  I-XI LABS &middot; Independent security research<br>
+  Set in IBM Plex Serif and IBM Plex Mono. No trackers, no analytics, no cookies.<br>
+  Assurance markers follow the state model on the Overview page.
+</footer>
+</div>
+</body>
+</html>
