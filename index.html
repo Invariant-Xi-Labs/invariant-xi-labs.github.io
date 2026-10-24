@@ -259,13 +259,6 @@ a:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius
   a{color:inherit;text-decoration:none}
 }
 
-/* ---------------- vortex figure ---------------- */
-.vortex{margin:1.5rem 0 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);background:#ffffff;position:relative;height:clamp(380px,62vw,600px);color-scheme:dark;overflow:hidden}
-.vortex[hidden]{display:none}
-.vortex canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:pan-y}
-.vortex canvas:active{cursor:grabbing}
-.vortex figcaption{position:absolute;left:1rem;bottom:.8rem;font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#4d6b5c;pointer-events:none}
-@media print{.vortex{display:none!important}}
 
 /* ---------------- iOS polish ---------------- */
 :root{--pad-l:max(20px,env(safe-area-inset-left,0px));--pad-r:max(20px,env(safe-area-inset-right,0px))}
@@ -273,34 +266,86 @@ html{background:var(--paper);-webkit-tap-highlight-color:rgba(28,63,110,.12)}
 .navlink{padding-block:.7rem;scroll-snap-align:start}
 .topbar-in{-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
 .contact dd a,.proglink{display:inline-block;padding-block:.55rem;margin-block:-.55rem}
-@media (orientation:landscape) and (max-height:500px){.vortex{height:min(62vw,80dvh)}}
-@media (pointer:coarse){
-  .vortex canvas{touch-action:none;right:44px;width:calc(100% - 44px);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
-  .vortex::after{content:"";position:absolute;top:0;bottom:0;right:0;width:44px;border-left:1px solid #dfe6e2}
+
+/* ---------------- single-screen shell ---------------- */
+:root{--bar:3.5rem}
+html{height:100%;overflow:hidden;overscroll-behavior:none}
+body{padding:0;display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
+.bar{flex:none;height:var(--bar);display:flex;align-items:center;gap:.7rem;padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:var(--pad-r);background:var(--paper);border-bottom:1px solid var(--rule);position:relative;z-index:40}
+.bar .wordmark{font-size:1.05rem;letter-spacing:.16em;margin:0}
+.bar .subtitle{margin:0 0 0 auto;font-size:.64rem;letter-spacing:.14em;white-space:nowrap}
+@media (max-width:760px){.bar .subtitle{display:none}}
+.burger{width:44px;height:44px;flex:none;border:0;background:none;color:var(--ink);cursor:pointer;display:grid;place-content:center;gap:5px;border-radius:6px}
+.burger span{display:block;width:22px;height:2px;background:currentColor;transition:transform .2s,opacity .2s}
+.burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.burger:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.scrim{position:fixed;left:0;right:0;bottom:0;top:calc(env(safe-area-inset-top,0px) + var(--bar));background:rgba(15,17,21,.4);opacity:0;pointer-events:none;transition:opacity .22s;z-index:25}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;left:0;bottom:0;top:calc(env(safe-area-inset-top,0px) + var(--bar));width:min(82vw,300px);z-index:30;background:var(--paper);border-right:1px solid var(--rule-2);display:flex;flex-direction:column;padding-block:.6rem calc(.6rem + env(safe-area-inset-bottom,0px));overflow-y:auto;transform:translateX(-100%);visibility:hidden;transition:transform .22s ease,visibility 0s .22s}
+.drawer.open{transform:none;visibility:visible;transition:transform .22s ease}
+.drawer .navlink{display:block;padding:.95rem var(--pad-r) .95rem max(20px,env(safe-area-inset-left,0px));border-bottom:0;border-left:3px solid transparent}
+.drawer .navlink[aria-current="page"]{border-left-color:var(--accent);background:var(--paper-2)}
+.drawer .sep{height:1px;background:var(--rule);margin:.5rem 0}
+main{flex:1;min-height:0;display:flex;flex-direction:column}
+.view{flex:1;min-height:0;display:flex;flex-direction:column}
+.view[hidden]{display:none}
+.stage{flex:1;min-height:0;position:relative;margin:0;background:#fff;overflow:hidden}
+.stage[hidden]{display:none}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.stage canvas:active{cursor:grabbing}
+.stage figcaption{position:absolute;left:max(1rem,env(safe-area-inset-left,0px));bottom:.8rem;font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#4d6b5c;pointer-events:none}
+dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-bottom:0;padding-inline:max(20px,env(safe-area-inset-left,0px)) var(--pad-r);grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
+.strip div,.strip div:last-child{padding:.6rem .8rem .65rem 0;border:0}
+.strip dd{font-size:.76rem}
+.panel{overflow-y:auto;overscroll-behavior:contain}
+.panel .inner{width:100%;max-width:calc(var(--measure) + 13rem);margin-inline:auto;padding:clamp(1.25rem,4vh,2.5rem) var(--pad-r) 1.5rem var(--pad-l)}
+.panel .secnum{margin-bottom:.4rem}
+.panel h2{margin-bottom:.9rem}
+@media print{
+  html,body{height:auto!important;overflow:visible!important}
+  .bar,.drawer,.scrim,.stage{display:none!important}
+  .view,.view[hidden]{display:block!important}
+  .panel{overflow:visible}
 }
 </style>
 </head>
 <body>
-<nav class="topbar" aria-label="Primary"><div class="topbar-in"><div class="navgroup"><a class="navlink" href="index.html" aria-current="page">Overview</a><a class="navlink" href="research.html">Research</a><a class="navlink" href="notes.html">Notes</a><a class="navlink" href="tools.html">Tools</a><a class="navlink" href="log.html">Lab Log</a><a class="navlink" href="cv.html">CV</a></div><div class="navgroup secondary"><a class="navlink" href="https://github.com/Invariant-Xi-Labs">GitHub &#8599;</a></div></div></nav>
-<div class="sheet">
-<header class="masthead">
+<header class="bar">
+  <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
   <h1 class="wordmark">I<span class="hyphen">&#8211;</span>XI&nbsp;LABS</h1>
   <p class="subtitle">Independent Security Research &middot; Formal Assurance</p>
-  <dl class="statusblock">
+</header>
+<div class="scrim" id="scrim"></div>
+<nav class="drawer" id="drawer" aria-label="Primary">
+  <a class="navlink" href="#home" data-view="home">Overview</a>
+  <a class="navlink" href="#scope" data-view="scope">Scope</a>
+  <a class="navlink" href="#method" data-view="method">Method</a>
+  <a class="navlink" href="#contact" data-view="contact">Contact</a>
+  <div class="sep"></div>
+  <a class="navlink" href="#research" data-view="research">Research</a>
+  <a class="navlink" href="#notes" data-view="notes">Notes</a>
+  <a class="navlink" href="#tools" data-view="tools">Tools</a>
+  <a class="navlink" href="#log" data-view="log">Lab Log</a>
+  <a class="navlink" href="#cv" data-view="cv">CV</a>
+  <div class="sep"></div>
+  <a class="navlink" href="https://github.com/Invariant-Xi-Labs">GitHub &#8599;</a>
+</nav>
+<main>
+<div class="view" id="v-home">
+  <figure class="stage" id="vortex">
+    <canvas id="vortex-canvas" role="img" aria-label="A thick square block of particles swirling in a vortex, venting along its axis"></canvas>
+    <figcaption>Drag to rotate the hypervisor</figcaption>
+  </figure>
+  <dl class="statusblock strip">
     <div><dt>Principal</dt><dd>Alec Sanchez</dd></div>
     <div><dt>Discipline</dt><dd>Detection Eng. / Platform Security</dd></div>
     <div><dt>Location</dt><dd>Houston, TX</dd></div>
     <div><dt>Status</dt><dd>Active</dd></div>
   </dl>
-</header>
-
-<figure class="vortex" id="vortex">
-  <canvas id="vortex-canvas" role="img" aria-label="A thick square block of particles swirling in a vortex, venting along its axis"></canvas>
-  <figcaption>Drag to rotate the hypervisor</figcaption>
-</figure>
-
-
-<section>
+</div>
+<div class="view panel" id="v-scope" hidden><div class="inner">
   <span class="secnum">&sect; 1 &nbsp; SCOPE</span>
   <h2>What this lab does</h2>
   <p class="lede">I-XI Labs is a single-operator research practice working on the problem of
@@ -313,9 +358,8 @@ html{background:var(--paper);-webkit-tap-highlight-color:rgba(28,63,110,.12)}
   documentation claims.</p>
   <p>The practice is architectural and defensive. Adversarial technique is used to validate
   controls and to define vulnerability classes formally, not as an offering.</p>
-</section>
-
-<section>
+</div></div>
+<div class="view panel" id="v-method" hidden><div class="inner">
   <span class="secnum">&sect; 2 &nbsp; METHOD</span>
   <h2>Assurance states</h2>
   <p>Most security documentation conflates three different things: a control that runs, a
@@ -332,9 +376,8 @@ html{background:var(--paper);-webkit-tap-highlight-color:rgba(28,63,110,.12)}
     is stated and the evidence that would settle it is named. Naming a risk is not mitigating
     it, and this marker says so explicitly.</span></li>
   </ul>
-</section>
-
-<section>
+</div></div>
+<div class="view panel" id="v-contact" hidden><div class="inner">
   <span class="secnum">&sect; 3 &nbsp; CONTACT</span>
   <h2>Correspondence</h2>
   <p>Research correspondence, collaboration, and vulnerability reports concerning this
@@ -343,16 +386,13 @@ html{background:var(--paper);-webkit-tap-highlight-color:rgba(28,63,110,.12)}
     <div><dt>Code</dt><dd><a href="https://github.com/Invariant-Xi-Labs">github.com/Invariant-Xi-Labs</a></dd></div>
     <div><dt>Professional</dt><dd><a href="https://linkedin.com/in/alecasanchez">linkedin.com/in/alecasanchez</a></dd></div>
   </dl>
-</section>
-
-<footer class="colophon">
-  <svg class="mark" viewBox="0 0 1574 860" fill="currentColor" role="img" aria-label="AERGUIIS mark"><path d="M0 0H180V700H0Z M0 109H560V264H0Z M0 436H560V591H0Z M750 18H1414V682H750Z M876 144V556H1288V144H876Z" transform="translate(80,80)"/></svg>
-  I-XI LABS &middot; Independent security research<br>
-  Set in IBM Plex Serif and IBM Plex Mono. No trackers, no analytics, no cookies.<br>
-  Assurance markers follow the state model on the Overview page.
-</footer>
-</div>
-
+</div></div>
+<div class="view panel" id="v-research" hidden><div class="inner"><h2>Research</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
+<div class="view panel" id="v-notes" hidden><div class="inner"><h2>Notes</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
+<div class="view panel" id="v-tools" hidden><div class="inner"><h2>Tools</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
+<div class="view panel" id="v-log" hidden><div class="inner"><h2>Lab Log</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
+<div class="view panel" id="v-cv" hidden><div class="inner"><h2>CV</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
+</main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
@@ -441,7 +481,7 @@ cv.addEventListener('pointerdown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;cv
 cv.addEventListener('pointermove',e=>{if(!dragging)return;yaw-=(e.clientX-lx)*.006;pitch=Math.max(-1.2,Math.min(1.2,pitch+(e.clientY-ly)*.006));lx=e.clientX;ly=e.clientY;if(still)draw()});
 cv.addEventListener('pointerup',()=>dragging=false);
 cv.addEventListener('pointercancel',()=>dragging=false);
-function size(){const w=cv.clientWidth,h=cv.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(still)draw()}
+function size(){const w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;renderer.setSize(w,h,false);camera.aspect=w/h;dist=Math.max(9.2,7.2/camera.aspect);camera.updateProjectionMatrix();if(still)draw()}
 function draw(){
   camera.position.set(Math.sin(yaw)*Math.cos(pitch)*dist,Math.sin(pitch)*dist,Math.cos(yaw)*Math.cos(pitch)*dist);
   camera.lookAt(0,0,0);renderer.render(scene,camera);
@@ -458,6 +498,31 @@ function frame(now){
 function start(){if(!raf){last=performance.now();raf=requestAnimationFrame(frame)}}
 function stop(){cancelAnimationFrame(raf);raf=0}
 new IntersectionObserver(es=>es[0].isIntersecting?start():stop()).observe(fig);
+})();
+</script>
+
+<script>
+(function(){
+const burger=document.getElementById('burger'),drawer=document.getElementById('drawer'),scrim=document.getElementById('scrim');
+const views=[].slice.call(document.querySelectorAll('.view')),links=[].slice.call(drawer.querySelectorAll('a[data-view]'));
+function setMenu(open){
+  drawer.classList.toggle('open',open);scrim.classList.toggle('open',open);
+  burger.setAttribute('aria-expanded',String(open));
+  burger.setAttribute('aria-label',open?'Close menu':'Open menu');
+}
+function show(){
+  let id=location.hash.slice(1)||'home';
+  if(!document.getElementById('v-'+id))id='home';
+  views.forEach(v=>{v.hidden=v.id!=='v-'+id});
+  links.forEach(a=>{if(a.dataset.view===id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  setMenu(false);
+}
+burger.addEventListener('click',()=>setMenu(!drawer.classList.contains('open')));
+scrim.addEventListener('click',()=>setMenu(false));
+addEventListener('keydown',e=>{if(e.key==='Escape'&&drawer.classList.contains('open')){setMenu(false);burger.focus()}});
+addEventListener('hashchange',show);
+links.forEach(l=>l.addEventListener('click',()=>setMenu(false)));
+show();
 })();
 </script>
 </body>
