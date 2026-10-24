@@ -274,6 +274,10 @@ html{background:var(--paper);-webkit-tap-highlight-color:rgba(28,63,110,.12)}
 .topbar-in{-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;overscroll-behavior-x:contain}
 .contact dd a,.proglink{display:inline-block;padding-block:.55rem;margin-block:-.55rem}
 @media (orientation:landscape) and (max-height:500px){.vortex{height:min(62vw,80dvh)}}
+@media (pointer:coarse){
+  .vortex canvas{touch-action:none;right:44px;width:calc(100% - 44px);-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+  .vortex::after{content:"";position:absolute;top:0;bottom:0;right:0;width:44px;border-left:1px solid #dfe6e2}
+}
 </style>
 </head>
 <body>
@@ -437,7 +441,7 @@ cv.addEventListener('pointerdown',e=>{dragging=true;lx=e.clientX;ly=e.clientY;cv
 cv.addEventListener('pointermove',e=>{if(!dragging)return;yaw-=(e.clientX-lx)*.006;pitch=Math.max(-1.2,Math.min(1.2,pitch+(e.clientY-ly)*.006));lx=e.clientX;ly=e.clientY;if(still)draw()});
 cv.addEventListener('pointerup',()=>dragging=false);
 cv.addEventListener('pointercancel',()=>dragging=false);
-function size(){const w=fig.clientWidth,h=fig.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(still)draw()}
+function size(){const w=cv.clientWidth,h=cv.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix();if(still)draw()}
 function draw(){
   camera.position.set(Math.sin(yaw)*Math.cos(pitch)*dist,Math.sin(pitch)*dist,Math.cos(yaw)*Math.cos(pitch)*dist);
   camera.lookAt(0,0,0);renderer.render(scene,camera);
