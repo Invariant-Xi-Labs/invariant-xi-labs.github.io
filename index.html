@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -7,7 +7,7 @@
 <meta name="description" content="I-XI Labs — independent security research and formal assurance.">
 <meta property="og:title" content="I-XI Labs">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#FAFAF9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0F1115" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0F1115" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="manifest" href="manifest.webmanifest">
@@ -16,7 +16,7 @@
 <meta name="apple-mobile-web-app-title" content="I-XI Labs">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 1000 1000&apos;%3E%3Cpath fill=&apos;%2316181C&apos; d=&apos;M220 150h180v700h-180z M220 259h560v155h-560z M220 586h560v155h-560z&apos;/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,300;0,500;0,600;0,700;1,300;1,500;1,600;1,700&display=swap">
 <style>html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 
@@ -34,7 +34,7 @@
   --paper:#0F1115; --paper-2:#171A20;
   --ink:#E8E9EB; --ink-2:#A4AAB3; --ink-3:#787E87;
   --rule:#262A31; --rule-2:#393F48;
-  --accent:#8FB3E0; --accent-soft:#16202E;
+  --accent:#C77DFF; --accent-soft:#241033;
   --enforced:#6BBF95; --declared:#D2A552; --open:#8B919A;
 }}
 :root[data-theme="dark"]{
@@ -42,7 +42,7 @@
   --paper:#0F1115; --paper-2:#171A20;
   --ink:#E8E9EB; --ink-2:#A4AAB3; --ink-3:#787E87;
   --rule:#262A31; --rule-2:#393F48;
-  --accent:#8FB3E0; --accent-soft:#16202E;
+  --accent:#C77DFF; --accent-soft:#241033;
   --enforced:#6BBF95; --declared:#D2A552; --open:#8B919A;
 }
 *{box-sizing:border-box}
@@ -292,11 +292,11 @@ body{padding:0;display:flex;flex-direction:column;overflow:hidden;overscroll-beh
 main{flex:1;min-height:0;display:flex;flex-direction:column}
 .view{flex:1;min-height:0;display:flex;flex-direction:column}
 .view[hidden]{display:none}
-.stage{flex:1;min-height:0;position:relative;margin:0;background:#fff;overflow:hidden}
+.stage{flex:1;min-height:0;position:relative;margin:0;background:#0b0d12;overflow:hidden}
 .stage[hidden]{display:none}
 .stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
 .stage canvas:active{cursor:grabbing}
-.stage figcaption{position:absolute;left:max(1rem,env(safe-area-inset-left,0px));bottom:.8rem;font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#4d6b5c;pointer-events:none}
+.stage figcaption{position:absolute;left:max(1rem,env(safe-area-inset-left,0px));bottom:.8rem;font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:#fff;pointer-events:none}
 dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-bottom:0;padding-inline:max(20px,env(safe-area-inset-left,0px)) var(--pad-r);grid-template-columns:repeat(auto-fit,minmax(130px,1fr))}
 .strip div,.strip div:last-child{padding:.6rem .8rem .65rem 0;border:0}
 .strip dd{font-size:.76rem}
@@ -310,6 +310,11 @@ dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-b
   .view,.view[hidden]{display:block!important}
   .panel{overflow:visible}
 }
+
+/* ---------------- italic, robust type ---------------- */
+body,body *{font-family:"Chakra Petch","Arial Narrow",system-ui,sans-serif!important;font-style:italic!important;font-weight:600!important}
+h1,h2,h3,.wordmark,strong,b{font-weight:700!important}
+.stage figcaption{font-weight:300!important;color:#fff}
 </style>
 </head>
 <body>
@@ -338,7 +343,7 @@ dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-b
 <div class="view" id="v-home">
   <figure class="stage" id="vortex">
     <canvas id="vortex-canvas" role="img" aria-label="A thick square block of particles swirling in a vortex, venting along its axis"></canvas>
-    <figcaption>Drag to rotate the hypervisor</figcaption>
+    <figcaption>Upcoming Research</figcaption>
   </figure>
   <dl class="statusblock strip">
     <div><dt>Principal</dt><dd>Alec Sanchez</dd></div>
@@ -398,7 +403,7 @@ if(!window.THREE){fig.hidden=true;return}
 let renderer;
 try{renderer=new THREE.WebGLRenderer({canvas:cv,antialias:true})}catch(e){fig.hidden=true;return}
 const small=matchMedia('(pointer:coarse) and (max-width:900px)').matches;renderer.setPixelRatio(Math.min(devicePixelRatio||1,small?1.5:2));
-renderer.setClearColor(0xffffff,1);
+renderer.setClearColor(0x0b0d12,1);
 const scene=new THREE.Scene();
 const camera=new THREE.PerspectiveCamera(40,1,.1,100);
 const S=1.5,cfg={spin:1,roll:1,thick:.3,dir:1},pulse=.75;
@@ -418,11 +423,11 @@ const sprite=(()=>{const c=document.createElement('canvas');c.width=c.height=32;
   const r=g.createRadialGradient(16,16,0,16,16,16);
   r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.5,'rgba(255,255,255,1)');r.addColorStop(.62,'rgba(255,255,255,0)');r.addColorStop(1,'rgba(255,255,255,0)');
   g.fillStyle=r;g.fillRect(0,0,32,32);return new THREE.CanvasTexture(c)})();
-const pm=()=>new THREE.PointsMaterial({size:.03,map:sprite,vertexColors:true,transparent:true,opacity:.9,depthWrite:false,sizeAttenuation:true});
+const pm=()=>new THREE.PointsMaterial({size:.03,map:sprite,vertexColors:true,transparent:true,opacity:.9,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true});
 const group=new THREE.Group();scene.add(group);
 group.add(new THREE.Points(geo,pm()));
-const slab=new THREE.Mesh(new THREE.BoxGeometry(2*S,1,2*S),new THREE.MeshBasicMaterial({color:0x1f7a4d,transparent:true,opacity:.04,depthWrite:false,side:THREE.DoubleSide}));
-const edges=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(2*S,1,2*S)),new THREE.LineBasicMaterial({color:0x14633d,transparent:true,opacity:.8}));
+const slab=new THREE.Mesh(new THREE.BoxGeometry(2*S,1,2*S),new THREE.MeshBasicMaterial({color:0x9a1fff,transparent:true,opacity:.08,depthWrite:false,side:THREE.DoubleSide}));
+const edges=new THREE.LineSegments(new THREE.EdgesGeometry(new THREE.BoxGeometry(2*S,1,2*S)),new THREE.LineBasicMaterial({color:0xc23bff,transparent:true,opacity:.85}));
 group.add(slab,edges);
 const JL=3.4,M=small?5000:14000;
 const jt=new Float32Array(M),jd=new Float32Array(M),ja=new Float32Array(M),jr=new Float32Array(M),jv=new Float32Array(M);
@@ -433,8 +438,8 @@ const jgeo=new THREE.BufferGeometry();
 jgeo.setAttribute('position',new THREE.BufferAttribute(jpos,3));
 jgeo.setAttribute('color',new THREE.BufferAttribute(jcol,3));
 group.add(new THREE.Points(jgeo,pm()));
-const jA=new THREE.Color(0x063b26),jB=new THREE.Color(0x3aa874),jc=new THREE.Color();
-const cA=new THREE.Color(0x3aa874),cB=new THREE.Color(0x1a7a4f),cC=new THREE.Color(0x04301f),tmp=new THREE.Color();
+const jA=new THREE.Color(0xf7e6ff),jB=new THREE.Color(0xe000ff),jc=new THREE.Color();
+const cA=new THREE.Color(0x7a00ff),cB=new THREE.Color(0xc23bff),cC=new THREE.Color(0xf7e6ff),tmp=new THREE.Color();
 let tm=0;
 function step(dt){
   tm+=dt;
@@ -454,8 +459,8 @@ function step(dt){
     pos[k]=ca/m*rho*S;pos[k+1]=y;pos[k+2]=sa/m*rho*S;
     const core=1-rho,h=(y/T+1)*.5;
     tmp.copy(cA).lerp(cB,Math.min(1,core*1.4)).lerp(cC,Math.max(0,core-.55)*1.2);
-    const br=.45+.55*h*(.6+core);
-    const w=Math.min(1,br);col[k]=1-(1-tmp.r)*w;col[k+1]=1-(1-tmp.g)*w;col[k+2]=1-(1-tmp.b)*w;
+    const br=.65+.75*h*(.6+core);
+    col[k]=tmp.r*br;col[k+1]=tmp.g*br;col[k+2]=tmp.b*br;
   }
   geo.attributes.position.needsUpdate=true;geo.attributes.color.needsUpdate=true;
   for(let i=0;i<M;i++){
@@ -468,7 +473,7 @@ function step(dt){
     jpos[k]=Math.cos(a)*rr;jpos[k+1]=y;jpos[k+2]=Math.sin(a)*rr;
     const f=Math.pow(1-t,1.3)*(.3+1.1*pulse);
     jc.copy(jA).lerp(jB,Math.min(1,t*1.3));
-    const w=Math.min(1,f*.9);jcol[k]=1-(1-jc.r)*w;jcol[k+1]=1-(1-jc.g)*w;jcol[k+2]=1-(1-jc.b)*w;
+    jcol[k]=jc.r*f;jcol[k+1]=jc.g*f;jcol[k+2]=jc.b*f;
   }
   jgeo.attributes.position.needsUpdate=true;jgeo.attributes.color.needsUpdate=true;
 }
