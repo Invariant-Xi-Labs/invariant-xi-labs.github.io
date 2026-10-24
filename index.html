@@ -273,7 +273,8 @@ html{height:100%;overflow:hidden;overscroll-behavior:none}
 body{padding:0;display:flex;flex-direction:column;overflow:hidden;overscroll-behavior:none;height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px))}
 .bar{flex:none;height:var(--bar);display:flex;align-items:center;gap:.7rem;padding-left:max(6px,env(safe-area-inset-left,0px));padding-right:var(--pad-r);background:var(--paper);border-bottom:1px solid var(--rule);position:relative;z-index:40}
 .bar .wordmark{font-size:1.05rem;letter-spacing:.16em;margin:0}
-.bar .subtitle{margin:0 0 0 auto;font-size:.64rem;letter-spacing:.14em;white-space:nowrap}
+.bar .mail{margin-left:auto;flex:none;padding:.7rem .4rem}
+.bar .subtitle{margin:0 0 0 .5rem;font-size:.64rem;letter-spacing:.14em;white-space:nowrap}
 @media (max-width:760px){.bar .subtitle{display:none}}
 .burger{width:44px;height:44px;flex:none;border:0;background:none;color:var(--ink);cursor:pointer;display:grid;place-content:center;gap:5px;border-radius:6px}
 .burger span{display:block;width:22px;height:2px;background:currentColor;transition:transform .2s,opacity .2s}
@@ -316,6 +317,7 @@ dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-b
   <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="drawer"><span></span><span></span><span></span></button>
   <h1 class="wordmark">I<span class="hyphen">&#8211;</span>XI&nbsp;LABS</h1>
   <p class="subtitle">Independent Security Research &middot; Formal Assurance</p>
+  <a class="navlink mail" href="mailto:alecsanchezpro@gmail.com?subject=I-XI%20Labs" aria-label="Send an email to alecsanchezpro@gmail.com">Email</a>
 </header>
 <div class="scrim" id="scrim"></div>
 <nav class="drawer" id="drawer" aria-label="Primary">
@@ -324,11 +326,11 @@ dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-b
   <a class="navlink" href="#method" data-view="method">Method</a>
   <a class="navlink" href="#contact" data-view="contact">Contact</a>
   <div class="sep"></div>
-  <a class="navlink" href="#research" data-view="research">Research</a>
-  <a class="navlink" href="#notes" data-view="notes">Notes</a>
-  <a class="navlink" href="#tools" data-view="tools">Tools</a>
-  <a class="navlink" href="#log" data-view="log">Lab Log</a>
-  <a class="navlink" href="#cv" data-view="cv">CV</a>
+  <a class="navlink" href="research.html">Research</a>
+  <a class="navlink" href="notes.html">Notes</a>
+  <a class="navlink" href="tools.html">Tools</a>
+  <a class="navlink" href="log.html">Lab Log</a>
+  <a class="navlink" href="cv.html">CV</a>
   <div class="sep"></div>
   <a class="navlink" href="https://github.com/Invariant-Xi-Labs">GitHub &#8599;</a>
 </nav>
@@ -342,7 +344,6 @@ dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-b
     <div><dt>Principal</dt><dd>Alec Sanchez</dd></div>
     <div><dt>Discipline</dt><dd>Detection Eng. / Platform Security</dd></div>
     <div><dt>Location</dt><dd>Houston, TX</dd></div>
-    <div><dt>Status</dt><dd>Active</dd></div>
   </dl>
 </div>
 <div class="view panel" id="v-scope" hidden><div class="inner">
@@ -383,15 +384,11 @@ dl.statusblock.strip{flex:none;margin:0;border-top:2px solid var(--ink);border-b
   <p>Research correspondence, collaboration, and vulnerability reports concerning this
   lab&rsquo;s own published work are welcome.</p>
   <dl class="contact">
+    <div><dt>Email</dt><dd><a href="mailto:alecsanchezpro@gmail.com">alecsanchezpro@gmail.com</a></dd></div>
     <div><dt>Code</dt><dd><a href="https://github.com/Invariant-Xi-Labs">github.com/Invariant-Xi-Labs</a></dd></div>
     <div><dt>Professional</dt><dd><a href="https://linkedin.com/in/alecasanchez">linkedin.com/in/alecasanchez</a></dd></div>
   </dl>
 </div></div>
-<div class="view panel" id="v-research" hidden><div class="inner"><h2>Research</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
-<div class="view panel" id="v-notes" hidden><div class="inner"><h2>Notes</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
-<div class="view panel" id="v-tools" hidden><div class="inner"><h2>Tools</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
-<div class="view panel" id="v-log" hidden><div class="inner"><h2>Lab Log</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
-<div class="view panel" id="v-cv" hidden><div class="inner"><h2>CV</h2><div class="empty"><span class="tag">Empty</span><p>Nothing has been added to this section yet.</p></div></div></div>
 </main>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
